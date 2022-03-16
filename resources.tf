@@ -47,14 +47,11 @@ resource "aws_security_group" "http_server_sg" {
 resource "aws_instance" "http_server" {
   // ami                    = "ami-033b95fb8079dc481"
   // from data.aws_ami
-  count = 2
+  count                  = 2
   ami                    = data.aws_ami.latest_aws_linux_2.id
   key_name               = var.ec2_key
   instance_type          = var.ec2_instance_type
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
   // get this from vpc on aws
   subnet_id = tolist(data.aws_subnet_ids.default_subnets.ids)[3]
-
-// use ansible for config mgt
-  
 }
